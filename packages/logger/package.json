@@ -31,8 +31,7 @@
     "watch": "ttsc --watch"
   },
   "files": [
-    "dist/*.js",
-    "dist/**/&.js"
+    "./dist/**/*.js"
   ],
   "babel": {
     "presets": [
