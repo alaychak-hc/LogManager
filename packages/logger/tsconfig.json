@@ -6,7 +6,7 @@
     "sourceMap": true,
     "removeComments": true,
     "outDir": "./dist",
-    "rootDir": "./",
+    "rootDir": "./src",
     "strict": true,
     "moduleResolution": "node",
     "resolveJsonModule": true,
