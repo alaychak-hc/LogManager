@@ -17,6 +17,7 @@
   },
   "scripts": {
     "build": "pnpm clean && ttsc",
+    "build:pack": "pnpm build && pnpm pack",
     "clean": "rimraf ./dist",
     "preinstall": "npx only-allow pnpm",
     "lint:staged": "lint-staged --debug --verbose",
@@ -31,7 +32,7 @@
     "watch": "ttsc --watch"
   },
   "files": [
-    "./dist/**/*.js"
+    "dist"
   ],
   "babel": {
     "presets": [
