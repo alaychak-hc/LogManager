@@ -1,16 +1,14 @@
 {
   "compilerOptions": {
     "allowJs": false,
+    "declaration": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": [
-      "esnext",
-      "esnext.asynciterable"
-    ],
+    "lib": ["esnext", "esnext.asynciterable"],
     "module": "commonjs",
     "moduleResolution": "node",
     "outDir": "./dist",

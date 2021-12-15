@@ -32,7 +32,8 @@
     "watch": "ttsc --watch"
   },
   "files": [
-    "dist"
+    "src/enums",
+    "src/helpers"
   ],
   "babel": {
     "presets": [
