@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build:logger": "pnpm build --filter @alaychak-hc/log-manager",
-    "publish:logger": "pnpm publish --filter @alaychak-hc/log-manager",
+    "publish:logger": "pnpm build --filter @alaychak-hc/log-manager",
     "lint:staged": "pnpm run lint:staged -r --filter=!./packages/api/dist",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate",
