@@ -8,12 +8,6 @@ node_modules
 # Ignore all environment files
 .env
 
-# Ignore KnexJS configuration files
-knexfile.ts
-
-# Ignore all certificate files (for HTTPS and Authhorization)
-**/cert/**/*
-
 # Ignore history files (from the File History extension, if enabled)
 **/.history
 
@@ -23,17 +17,5 @@ knexfile.ts
 # Ignore all output files (e.g. line count/lint)
 out
 
-# Ignore distribution folder
-dist
-
-# Ignore developer documentation files (these are auto-generated)
-docs/developer
-
-# Ignore GraphQL schema file (created in local/development environments)
-schema.gql
-
 # Ignore developer notes
 notes.txt
-
-# Ignore Swagger YAML file
-swagger.yml 
