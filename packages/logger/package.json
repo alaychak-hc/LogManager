@@ -16,26 +16,24 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "scripts": {
-    "host": "lt --port 4100 --subdomain ctfhir",
-    "build": "pnpm clean && ttsc && pnpm copy-files",
-    "docs:build": "pnpm typedoc",
-    "buildOLD": "npm run typedoc && npm run clean && ttsc && npm run copy-files",
+    "build": "pnpm clean && ttsc",
     "clean": "rimraf ./dist",
-    "compile-ts": "ttsc",
-    "copy-files": "copyfiles \"src/docs/**/*\" dist && copyfiles \"src/cert/**/*\" dist && copyfiles \"src/db/**/*\" dist && copyfiles process.json dist",
     "preinstall": "npx only-allow pnpm",
     "lint:staged": "lint-staged --debug --verbose",
     "lint": "eslint src --ext .ts --ignore-pattern __tests__/ --fix",
-    "lint-html": "eslint src --ext .ts --ignore-pattern __tests__/ --output-file out/lint.html --format html",
-    "pm2-log": "pm2 logs 'LogManager'",
-    "pm2-start": "cross-var pm2 start process.json --env $npm_config_fhir-env",
-    "pm2-stop": "cross-var pm2 stop process.json --env $npm_config_fhir-env",
+    "lint:html": "eslint src --ext .ts --ignore-pattern __tests__/ --output-file out/lint.html --format html",
+    "pm2:log": "pm2 logs 'LogManager'",
+    "pm2:start": "cross-var pm2 start process.json --env $npm_config_fhir-env",
+    "pm2:stop": "cross-var pm2 stop process.json --env $npm_config_fhir-env",
     "start": "ts-node --transpile-only src/start.ts",
-    "start-dev": "tsnd --respawn -r tsconfig-paths/register --clear --transpile-only src/start.ts",
-    "start-dev-original": "ts-node-dev --clear --transpile-only src/start.ts",
+    "start:dev": "tsnd --respawn -r tsconfig-paths/register --clear --transpile-only src/start.ts",
     "test": "jest",
     "watch": "ttsc --watch"
   },
+  "files": [
+    "dist/*.js",
+    "dist/**/&.js"
+  ],
   "babel": {
     "presets": [
       "@babel/preset-env"
@@ -122,6 +120,7 @@
     "nodemon": "^2.0.14",
     "prettier": "^2.4.1",
     "regenerator-runtime": "^0.13.9",
+    "rimraf": "^3.0.2",
     "semantic-release": "^18.0.0",
     "ts-jest": "^27.0.7",
     "ts-node": "^10.4.0",

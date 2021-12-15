@@ -49,6 +49,7 @@ importers:
       nodemon: ^2.0.14
       prettier: ^2.4.1
       regenerator-runtime: ^0.13.9
+      rimraf: ^3.0.2
       semantic-release: ^18.0.0
       ts-jest: ^27.0.7
       ts-node: ^10.4.0
@@ -91,6 +92,7 @@ importers:
       nodemon: 2.0.15
       prettier: 2.5.1
       regenerator-runtime: 0.13.9
+      rimraf: 3.0.2
       semantic-release: 18.0.1
       ts-jest: 27.1.1_dee0b726dbd276697ee4962bafb31db0
       ts-node: 10.4.0_69110452f0eabb9535124518c5fd04a6

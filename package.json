@@ -3,20 +3,13 @@
   "description": "The workspace for the CareTracker FHIR API",
   "private": true,
   "scripts": {
-    "build:api": "pnpm build --filter @caretracker/fhir-api --filter=!./packages/api/dist",
+    "build:logger": "pnpm build --filter @alaychak-hc/log-manager",
+    "publish:logger": "pnpm publish --filter @alaychak-hc/log-manager",
     "lint:staged": "pnpm run lint:staged -r --filter=!./packages/api/dist",
-    "api:build": "pnpm run build --filter @caretracker/fhir-api",
-    "api:host": "pnpm run host --filter @caretracker/fhir-api",
-    "api:dev": "pnpm run start-dev --filter @caretracker/fhir-api",
-    "api:package": "pnpm run package --filter @caretracker/fhir-api",
-    "api:start": "pnpm run pm2-start --filter @caretracker/fhir-api",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate",
     "preinstall": "npx only-allow pnpm",
-    "prepare": "husky install",
-    "website:build": "pnpm run next-build --filter @caretracker/fhir-api-website",
-    "website:dev": "pnpm run next-dev --filter @caretracker/fhir-api-website",
-    "website:start": "pnpm run next-start --filter @caretracker/fhir-api-website"
+    "prepare": "husky install"
   },
   "engines": {
     "node": ">= 16.10.0",
