@@ -12,7 +12,6 @@
   "bugs": {
     "url": "https://github.com/HarrisCareTracker/LogManager/issues"
   },
-  "private": true,
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
