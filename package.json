@@ -1,0 +1,98 @@
+{
+  "name": "caretracker",
+  "description": "The workspace for the CareTracker FHIR API",
+  "private": true,
+  "scripts": {
+    "build:api": "pnpm build --filter @caretracker/fhir-api --filter=!./packages/api/dist",
+    "lint:staged": "pnpm run lint:staged -r --filter=!./packages/api/dist",
+    "api:build": "pnpm run build --filter @caretracker/fhir-api",
+    "api:host": "pnpm run host --filter @caretracker/fhir-api",
+    "api:dev": "pnpm run start-dev --filter @caretracker/fhir-api",
+    "api:package": "pnpm run package --filter @caretracker/fhir-api",
+    "api:start": "pnpm run pm2-start --filter @caretracker/fhir-api",
+    "contributors:add": "all-contributors add",
+    "contributors:generate": "all-contributors generate",
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky install",
+    "website:build": "pnpm run next-build --filter @caretracker/fhir-api-website",
+    "website:dev": "pnpm run next-dev --filter @caretracker/fhir-api-website",
+    "website:start": "pnpm run next-start --filter @caretracker/fhir-api-website"
+  },
+  "engines": {
+    "node": ">= 16.10.0",
+    "pnpm": ">= 6.15.0"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "release": {
+    "branches": [
+      "main"
+    ],
+    "plugins": [
+      [
+        "@semantic-release/commit-analyzer",
+        {
+          "parserOpts": {
+            "noteKeywords": [
+              "BREAKING CHANGE",
+              "BREAKING CHANGES"
+            ]
+          },
+          "preset": "angular",
+          "releaseRules": [
+            {
+              "release": "patch",
+              "scope": "README",
+              "type": "docs"
+            },
+            {
+              "release": "patch",
+              "type": "refactor"
+            },
+            {
+              "release": "patch",
+              "type": "style"
+            }
+          ]
+        }
+      ],
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/npm",
+      [
+        "@semantic-release/github",
+        {
+          "assets": [
+            {
+              "name": "FHIR-API - v${nextRelease.version}.zip",
+              "label": "FHIR-API - v${nextRelease.version}",
+              "path": "dist/release.zip"
+            }
+          ]
+        }
+      ],
+      [
+        "@semantic-release/git",
+        {
+          "assets": [
+            "package.json"
+          ],
+          "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+        }
+      ]
+    ]
+  },
+  "dependencies": {
+    "all-contributors-cli": "^6.20.0",
+    "husky": "^7.0.4",
+    "lint-staged": "^11.2.6",
+    "prettier": "^2.4.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^13.2.1",
+    "@commitlint/config-conventional": "^13.2.0",
+    "typescript": "^4.4.4"
+  }
+}
