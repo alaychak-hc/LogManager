@@ -15,8 +15,10 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "main": "./src/helpers/Logger.ts",
+  "main": "./dist/helpers/Logger.js",
+  "types": "./dist/helpers/Logger.d.ts",
   "scripts": {
+    "prepublish": "pnpm build",
     "build": "pnpm clean && ttsc",
     "build:pack": "pnpm build && pnpm pack",
     "clean": "rimraf ./dist",
@@ -33,8 +35,7 @@
     "watch": "ttsc --watch"
   },
   "files": [
-    "src/enums",
-    "src/helpers"
+    "dist"
   ],
   "babel": {
     "presets": [

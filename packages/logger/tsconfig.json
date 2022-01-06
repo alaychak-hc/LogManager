@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
+    "declaration": true,
     "lib": ["esnext", "esnext.asynciterable"],
     "sourceMap": true,
     "removeComments": true,
@@ -28,5 +29,6 @@
         "transform": "typescript-transform-paths"
       }
     ]
-  }
+  },
+  "exclude": ["node_modules", "dist"]
 }
