@@ -93,8 +93,7 @@
   "dependencies": {
     "boolean": "^3.1.4",
     "date-fns": "^2.27.0",
-    "winston": "^3.3.3",
-    "winston-daily-rotate-file": "^4.5.5"
+    "winston": "^3.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",

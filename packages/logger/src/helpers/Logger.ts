@@ -9,7 +9,7 @@
     Email: ALaychak@HarrisComputer.com
 
     Created At: 02-09-2021 15:33:54 PM
-    Last Modified: 04-05-2022 09:35:02 PM
+    Last Modified: 04-05-2022 09:48:47 PM
     Last Updated By: Andrew Laychak
 
     Description: Global logger that handles logging data for various sources
@@ -24,7 +24,7 @@
 import { format as dformat } from 'date-fns';
 import winston, { format } from 'winston';
 import { boolean } from 'boolean';
-import DailyRotateFile from 'winston-daily-rotate-file';
+// import DailyRotateFile from 'winston-daily-rotate-file';
 import util from 'util';
 import { logLevels } from '../enums/Log Level';
 
@@ -61,7 +61,7 @@ class LogManager {
       return `${nTimestamp} [${nLabel}] ${level}: ${message}`;
     });
 
-    let winstonTransports: winston.transport | winston.transport[] | undefined =
+    const winstonTransports: winston.transport | winston.transport[] | undefined =
       [
         new winston.transports.Console({
           level: 'DEBUG',
@@ -71,22 +71,20 @@ class LogManager {
       ];
 
     if (this.#isNode) {
-      const dailyLogTransport = new DailyRotateFile({
-        level: 'DEBUG',
-        frequency: '1m',
-        filename: './logs/CARETRACKER-FHIR-API-%DATE%',
-        extension: '.log',
-        datePattern: 'YYYY-MM-DD',
-        zippedArchive: false,
-        maxSize: '1g',
-        maxFiles: '14d',
-      });
-
+      // const dailyLogTransport = new DailyRotateFile({
+      //   level: 'DEBUG',
+      //   frequency: '1m',
+      //   filename: './logs/CARETRACKER-FHIR-API-%DATE%',
+      //   extension: '.log',
+      //   datePattern: 'YYYY-MM-DD',
+      //   zippedArchive: false,
+      //   maxSize: '1g',
+      //   maxFiles: '14d',
+      // });
       // dailyLogTransport.on('new', (newFileName) => {
       //   console.log(newFileName);
       // });
-
-      winstonTransports = [...winstonTransports, dailyLogTransport];
+      // winstonTransports = [...winstonTransports, dailyLogTransport];
     }
 
     this.#logger = winston.createLogger({
@@ -150,10 +148,13 @@ class LogManager {
 }
 // #endregion
 
-const logManager = new LogManager(false);
+// const logManager = new LogManager(true);
 const logManagerBrowser = new LogManager(false);
 
 // #region Exports
-export default logManager;
-export { logManager, logManagerBrowser };
+// export default logManager;
+// export { logManager, logManagerBrowser };
+
+export default logManagerBrowser;
+export { logManagerBrowser };
 // #endregion
