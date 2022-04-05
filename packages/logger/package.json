@@ -15,8 +15,8 @@
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
-  "main": "./dist/helpers/Logger.js",
-  "types": "./dist/helpers/Logger.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "prepublish": "pnpm build",
     "build": "pnpm clean && ttsc",

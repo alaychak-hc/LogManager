@@ -9,7 +9,7 @@
     Email: ALaychak@HarrisComputer.com
 
     Created At: 02-09-2021 15:33:54 PM
-    Last Modified: 12-15-2021 09:28:27 AM
+    Last Modified: 04-05-2022 09:35:02 PM
     Last Updated By: Andrew Laychak
 
     Description: Global logger that handles logging data for various sources
@@ -35,7 +35,11 @@ const { combine, timestamp, colorize, printf, prettyPrint } = format;
 class LogManager {
   #logger: winston.Logger;
 
-  constructor() {
+  #isNode: boolean;
+
+  constructor(isNode: boolean) {
+    this.#isNode = isNode;
+
     const logColors = {
       EMERGENCY: 'red',
       ALERT: 'red',
@@ -57,20 +61,33 @@ class LogManager {
       return `${nTimestamp} [${nLabel}] ${level}: ${message}`;
     });
 
-    const dailyLogTransport = new DailyRotateFile({
-      level: 'DEBUG',
-      frequency: '1m',
-      filename: './logs/CARETRACKER-FHIR-API-%DATE%',
-      extension: '.log',
-      datePattern: 'YYYY-MM-DD',
-      zippedArchive: false,
-      maxSize: '1g',
-      maxFiles: '14d',
-    });
+    let winstonTransports: winston.transport | winston.transport[] | undefined =
+      [
+        new winston.transports.Console({
+          level: 'DEBUG',
+          silent: boolean(process.env.LOGGER_CONSOLE_SILENT),
+          format: combine(customFormat, colorize({ all: true })),
+        }),
+      ];
 
-    // dailyLogTransport.on('new', (newFileName) => {
-    //   console.log(newFileName);
-    // });
+    if (this.#isNode) {
+      const dailyLogTransport = new DailyRotateFile({
+        level: 'DEBUG',
+        frequency: '1m',
+        filename: './logs/CARETRACKER-FHIR-API-%DATE%',
+        extension: '.log',
+        datePattern: 'YYYY-MM-DD',
+        zippedArchive: false,
+        maxSize: '1g',
+        maxFiles: '14d',
+      });
+
+      // dailyLogTransport.on('new', (newFileName) => {
+      //   console.log(newFileName);
+      // });
+
+      winstonTransports = [...winstonTransports, dailyLogTransport];
+    }
 
     this.#logger = winston.createLogger({
       exitOnError: false,
@@ -79,14 +96,7 @@ class LogManager {
         timestamp({ format: 'YYYY-MM-DD hh:mm:ss A' }),
         prettyPrint()
       ),
-      transports: [
-        new winston.transports.Console({
-          level: 'DEBUG',
-          silent: boolean(process.env.LOGGER_CONSOLE_SILENT),
-          format: combine(customFormat, colorize({ all: true })),
-        }),
-        dailyLogTransport,
-      ],
+      transports: winstonTransports,
     });
   }
 
@@ -140,8 +150,10 @@ class LogManager {
 }
 // #endregion
 
-const logManager = new LogManager();
+const logManager = new LogManager(false);
+const logManagerBrowser = new LogManager(false);
 
 // #region Exports
 export default logManager;
+export { logManager, logManagerBrowser };
 // #endregion

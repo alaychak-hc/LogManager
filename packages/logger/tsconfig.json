@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "esnext",
     "module": "commonjs",
-    "declaration": true,
     "lib": ["esnext", "esnext.asynciterable"],
-    "sourceMap": true,
+    "inlineSourceMap": true,
+    "declaration": true,
+    "declarationMap": true,
     "removeComments": true,
     "outDir": "./dist",
     "rootDir": "./src",
@@ -28,7 +29,8 @@
       {
         "transform": "typescript-transform-paths"
       }
-    ]
+    ],
+    "types": ["node"]
   },
   "exclude": ["node_modules", "dist"]
 }
