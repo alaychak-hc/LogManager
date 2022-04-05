@@ -9,7 +9,7 @@
     Email: ALaychak@HarrisComputer.com
 
     Created At: 02-09-2021 15:33:54 PM
-    Last Modified: 04-05-2022 09:48:47 PM
+    Last Modified: 04-05-2022 10:25:10 PM
     Last Updated By: Andrew Laychak
 
     Description: Global logger that handles logging data for various sources
@@ -24,7 +24,7 @@
 import { format as dformat } from 'date-fns';
 import winston, { format } from 'winston';
 import { boolean } from 'boolean';
-// import DailyRotateFile from 'winston-daily-rotate-file';
+import DailyRotateFile from 'winston-daily-rotate-file';
 import util from 'util';
 import { logLevels } from '../enums/Log Level';
 
@@ -35,11 +35,7 @@ const { combine, timestamp, colorize, printf, prettyPrint } = format;
 class LogManager {
   #logger: winston.Logger;
 
-  #isNode: boolean;
-
-  constructor(isNode: boolean) {
-    this.#isNode = isNode;
-
+  constructor() {
     const logColors = {
       EMERGENCY: 'red',
       ALERT: 'red',
@@ -61,31 +57,32 @@ class LogManager {
       return `${nTimestamp} [${nLabel}] ${level}: ${message}`;
     });
 
-    const winstonTransports: winston.transport | winston.transport[] | undefined =
-      [
-        new winston.transports.Console({
-          level: 'DEBUG',
-          silent: boolean(process.env.LOGGER_CONSOLE_SILENT),
-          format: combine(customFormat, colorize({ all: true })),
-        }),
-      ];
+    const dailyLogTransport = new DailyRotateFile({
+      level: 'DEBUG',
+      frequency: '1m',
+      filename: './logs/CARETRACKER-FHIR-API-%DATE%',
+      extension: '.log',
+      datePattern: 'YYYY-MM-DD',
+      zippedArchive: false,
+      maxSize: '1g',
+      maxFiles: '14d',
+    });
 
-    if (this.#isNode) {
-      // const dailyLogTransport = new DailyRotateFile({
-      //   level: 'DEBUG',
-      //   frequency: '1m',
-      //   filename: './logs/CARETRACKER-FHIR-API-%DATE%',
-      //   extension: '.log',
-      //   datePattern: 'YYYY-MM-DD',
-      //   zippedArchive: false,
-      //   maxSize: '1g',
-      //   maxFiles: '14d',
-      // });
-      // dailyLogTransport.on('new', (newFileName) => {
-      //   console.log(newFileName);
-      // });
-      // winstonTransports = [...winstonTransports, dailyLogTransport];
-    }
+    dailyLogTransport.on('new', (newFileName) => {
+      console.log(newFileName);
+    });
+
+    const winstonTransports:
+      | winston.transport
+      | winston.transport[]
+      | undefined = [
+      new winston.transports.Console({
+        level: 'DEBUG',
+        silent: boolean(process.env.LOGGER_CONSOLE_SILENT),
+        format: combine(customFormat, colorize({ all: true })),
+      }),
+      dailyLogTransport,
+    ];
 
     this.#logger = winston.createLogger({
       exitOnError: false,
@@ -148,13 +145,8 @@ class LogManager {
 }
 // #endregion
 
-// const logManager = new LogManager(true);
-const logManagerBrowser = new LogManager(false);
+const logManager = new LogManager();
 
 // #region Exports
-// export default logManager;
-// export { logManager, logManagerBrowser };
-
-export default logManagerBrowser;
-export { logManagerBrowser };
+export default logManager;
 // #endregion

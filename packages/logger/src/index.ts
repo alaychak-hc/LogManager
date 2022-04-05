@@ -5,7 +5,7 @@
     Email: ALaychak@harriscomputer.com
 
     Created At: 04-05-2022 09:18:20 PM
-    Last Modified: 04-05-2022 09:44:57 PM
+    Last Modified: 04-05-2022 10:52:03 PM
     Last Updated By: Andrew Laychak
 
     Description: Index file for the resolvers package
@@ -17,12 +17,10 @@
 // #endregion
 
 // #region Imports
-// import { logManager, logManagerBrowser } from './helpers/Logger';
-import { logManagerBrowser } from './helpers/Logger';
+import logManager from '@helpers/Logger';
 // #endregion
 
 // #region Exports
-export default logManagerBrowser;
-export { logManagerBrowser };
-// export { logManager, logManagerBrowser };
+export default logManager;
+export { logManager };
 // #endregion
