@@ -6,34 +6,35 @@
 /*
  ********************************************
     Author: Andrew Laychak
-    Email: ALaychak@HarrisComputer.com
+    Email: ALaychak@harriscomputer.com
 
-    Created At: 02-09-2021 15:33:54 PM
-    Last Modified: 04-05-2022 10:25:10 PM
+    Created At: 05-16-2022 09:08:07 PM
+    Last Modified: 05-20-2022 10:29:26 PM
     Last Updated By: Andrew Laychak
 
     Description: Global logger that handles logging data for various sources
 
     References:
       - Winston: https://github.com/winstonjs/winston
+      - Winston-Daily-Rotate-File: https://github.com/winstonjs/winston-daily-rotate-file
  ********************************************
 */
 // #endregion
 
 // #region Imports
 import { format as dformat } from 'date-fns';
-import winston, { format } from 'winston';
+import winston, { addColors, format, Logger } from 'winston';
 import { boolean } from 'boolean';
 import DailyRotateFile from 'winston-daily-rotate-file';
 import util from 'util';
-import { logLevels } from '../enums/Log Level';
+import { logLevels } from '../enums/Log Level.js';
 
 const { combine, timestamp, colorize, printf, prettyPrint } = format;
 // #endregion
 
-// #region Logger
+// #region Log Manager
 class LogManager {
-  #logger: winston.Logger;
+  #logger: Logger;
 
   constructor() {
     const logColors = {
@@ -47,29 +48,14 @@ class LogManager {
       DEBUG: 'magenta',
     };
 
-    winston.addColors(logColors);
+    addColors(logColors);
 
     const customFormat = printf(({ level, message, label, timestamp }) => {
-      const nLabel: string = (label as string) ?? 'CARETRACKER FHIR API';
+      const nLabel: string = (label as string).toUpperCase();
       const nTimestamp =
         (timestamp as string) ?? dformat(new Date(), 'yyy-mm-dd hh:mm:ss a');
 
       return `${nTimestamp} [${nLabel}] ${level}: ${message}`;
-    });
-
-    const dailyLogTransport = new DailyRotateFile({
-      level: 'DEBUG',
-      frequency: '1m',
-      filename: './logs/CARETRACKER-FHIR-API-%DATE%',
-      extension: '.log',
-      datePattern: 'YYYY-MM-DD',
-      zippedArchive: false,
-      maxSize: '1g',
-      maxFiles: '14d',
-    });
-
-    dailyLogTransport.on('new', (newFileName) => {
-      console.log(newFileName);
     });
 
     const winstonTransports:
@@ -77,12 +63,27 @@ class LogManager {
       | winston.transport[]
       | undefined = [
       new winston.transports.Console({
-        level: 'DEBUG',
+        level: process.env.LOGGER_CONSOLE_LEVEL ?? 'DEBUG',
         silent: boolean(process.env.LOGGER_CONSOLE_SILENT),
         format: combine(customFormat, colorize({ all: true })),
       }),
-      dailyLogTransport,
     ];
+
+    if (boolean(process.env.LOGGER_FILE_LOGGER_ENABLED) === true) {
+      const fileNameLabel = process.env.LOGGER_FILE_LABEL ?? 'LOG-MANAGER';
+      const dailyLogTransport = new DailyRotateFile({
+        level: process.env.LOGGER_FILE_LEVEL ?? 'DEBUG',
+        frequency: '1m',
+        filename: `./logs/${fileNameLabel}-%DATE%`,
+        extension: '.log',
+        datePattern: 'YYYY-MM-DD',
+        zippedArchive: false,
+        maxSize: '1g',
+        maxFiles: '14d',
+      });
+
+      winstonTransports.push(dailyLogTransport);
+    }
 
     this.#logger = winston.createLogger({
       exitOnError: false,
@@ -97,15 +98,24 @@ class LogManager {
 
   #logMessage(level: string, message: string, ...optionalParams: unknown[]) {
     let extraMessage = '';
-    optionalParams.forEach((op) => {
+    optionalParams.forEach((op, opIndex) => {
       if (typeof op === 'object') {
-        extraMessage += util.inspect(op, { depth: null });
+        extraMessage += util.inspect(op, {
+          depth: null,
+          colors: true,
+          numericSeparator: true,
+        });
       } else {
         extraMessage += op;
+      }
+
+      if (opIndex >= 1 && opIndex < optionalParams.length - 1) {
+        extraMessage += ' ';
       }
     });
 
     this.#logger.log({
+      label: process.env.LOGGER_LABEL ?? 'LOG MANAGER',
       level,
       message: `${message}${extraMessage}`,
     });
@@ -145,8 +155,10 @@ class LogManager {
 }
 // #endregion
 
+// #region Initialize
 const logManager = new LogManager();
+// #endregion
 
 // #region Exports
-export default logManager;
+export { logManager, LogManager };
 // #endregion

@@ -1,11 +1,11 @@
 {
   "compilerOptions": {
-    "target": "esnext",
-    "module": "commonjs",
-    "lib": ["esnext", "esnext.asynciterable"],
-    "inlineSourceMap": true,
+    "target": "ESNext",
+    "module": "ESNext",
     "declaration": true,
-    "declarationMap": true,
+    "lib": ["esnext", "esnext.asynciterable"],
+    "declarationMap": false,
+    "sourceMap": false,
     "removeComments": true,
     "outDir": "./dist",
     "rootDir": "./src",
@@ -29,8 +29,7 @@
       {
         "transform": "typescript-transform-paths"
       }
-    ],
-    "types": ["node"]
+    ]
   },
   "exclude": ["node_modules", "dist"]
 }

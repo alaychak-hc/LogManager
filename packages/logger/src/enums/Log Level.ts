@@ -1,14 +1,11 @@
-// #region ESLint Rules
-/* eslint-disable no-shadow */
-// #endregion
-
+// #region Developer Information
 /*
  ********************************************
     Author: Andrew Laychak
-    Email: ALaychak@HarrisComputer.com
+    Email: ALaychak@harriscomputer.com
 
-    Created At: 02-10-2021 11:51:39 AM
-    Last Modified: 12-15-2021 09:59:47 AM
+    Created At: 05-18-2022 09:03:54 PM
+    Last Modified: 05-18-2022 09:04:01 PM
     Last Updated By: Andrew Laychak
 
     Description: Log levels for the logger.
@@ -17,6 +14,7 @@
       - None
  ********************************************
 */
+// #endregion
 
 // #region Log Levels
 export enum LogLevel {
