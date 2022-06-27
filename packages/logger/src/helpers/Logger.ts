@@ -9,7 +9,7 @@
     Email: ALaychak@harriscomputer.com
 
     Created At: 05-16-2022 09:08:07 PM
-    Last Modified: 05-20-2022 10:29:26 PM
+    Last Modified: 06-27-2022 12:58:05 PM
     Last Updated By: Andrew Laychak
 
     Description: Global logger that handles logging data for various sources
@@ -55,7 +55,7 @@ class LogManager {
       const nTimestamp =
         (timestamp as string) ?? dformat(new Date(), 'yyy-mm-dd hh:mm:ss a');
 
-      return `${nTimestamp} [${nLabel}] ${level}: ${message}`;
+      return `${nTimestamp} [${nLabel}] ${level}: ${message as string}`;
     });
 
     const winstonTransports:
