@@ -2,7 +2,7 @@
 node_modules
 
 # Ignore VS Code project settings, except the suggested extensions (for new users) and workspace settings (required for the workspace ESLint setup)
-.vscode
+.vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
 
@@ -17,3 +17,6 @@ notes.txt
 
 # Ignore NPM publish package file
 .npmrc
+
+# Ignore .DS_Store files
+.DS_Store
