@@ -4,11 +4,11 @@
     Author: Andrew Laychak
     Email: ALaychak@harriscomputer.com
 
-    Created At: 04-05-2022 09:18:20 PM
-    Last Modified: 04-05-2022 10:52:03 PM
+    Created At: 05-20-2022 02:02:39 AM
+    Last Modified: 05-20-2022 02:18:01 AM
     Last Updated By: Andrew Laychak
 
-    Description: Index file for the resolvers package
+    Description: Index file for the log manager package
 
     References:
       - None
@@ -17,10 +17,10 @@
 // #endregion
 
 // #region Imports
-import logManager from '@helpers/Logger';
+import { logManager, LogManager } from './helpers/Logger.js';
 // #endregion
 
 // #region Exports
 export default logManager;
-export { logManager };
+export { LogManager };
 // #endregion

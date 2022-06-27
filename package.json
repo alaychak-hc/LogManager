@@ -1,11 +1,11 @@
 {
-  "name": "caretracker",
-  "description": "The workspace for the CareTracker FHIR API",
+  "name": "@alaychak-hc/log-manager",
+  "description": "The workspace for the log manager",
   "private": true,
   "scripts": {
-    "build:logger": "pnpm build --filter @alaychak-hc/log-manager",
-    "publish:logger": "pnpm publish --filter @alaychak-hc/log-manager",
-    "lint:staged": "pnpm run lint:staged -r --filter=!./packages/api/dist",
+    "build:logger": "pnpm --filter @alaychak-hc/log-manager build",
+    "publish:logger": "pnpm --filter @alaychak-hc/log-manager publish",
+    "lint:staged": "pnpm --filter=!./packages/api/dist lint-staged -r",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate",
     "preinstall": "npx only-allow pnpm",
@@ -19,6 +19,9 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
+  },
+  "lint-staged": {
+    "src/**/*.{js,jsx}": "eslint --fix"
   },
   "release": {
     "branches": [
@@ -59,8 +62,8 @@
         {
           "assets": [
             {
-              "name": "FHIR-API - v${nextRelease.version}.zip",
-              "label": "FHIR-API - v${nextRelease.version}",
+              "name": "Log Manager - v${nextRelease.version}.zip",
+              "label": "Log Manager - v${nextRelease.version}",
               "path": "dist/release.zip"
             }
           ]
