@@ -9,7 +9,7 @@
     Email: ALaychak@harriscomputer.com
 
     Created At: 05-16-2022 09:08:07 PM
-    Last Modified: 06-27-2022 12:58:05 PM
+    Last Modified: 01-09-2023 11:31:46 AM
     Last Updated By: Andrew Laychak
 
     Description: Global logger that handles logging data for various sources
@@ -42,7 +42,7 @@ class LogManager {
       ALERT: 'red',
       CRITICAL: 'red',
       ERROR: 'red',
-      WARNING: 'yellow',
+      WARN: 'yellow',
       NOTICE: 'yellow',
       INFO: 'cyan',
       DEBUG: 'magenta',
@@ -133,8 +133,8 @@ class LogManager {
     this.#logMessage('NOTICE', message, ...optionalParams);
   }
 
-  warning(message: string, ...optionalParams: unknown[]): void {
-    this.#logMessage('WARNING', message, ...optionalParams);
+  warn(message: string, ...optionalParams: unknown[]): void {
+    this.#logMessage('WARN', message, ...optionalParams);
   }
 
   error(message: string, ...optionalParams: unknown[]): void {

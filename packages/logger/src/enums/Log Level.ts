@@ -5,7 +5,7 @@
     Email: ALaychak@harriscomputer.com
 
     Created At: 05-18-2022 09:03:54 PM
-    Last Modified: 05-18-2022 09:04:01 PM
+    Last Modified: 01-09-2023 11:32:10 AM
     Last Updated By: Andrew Laychak
 
     Description: Log levels for the logger.
@@ -22,7 +22,7 @@ export enum LogLevel {
   ALERT = 'ALERT',
   CRITICAL = 'CRITICAL',
   ERROR = 'ERROR',
-  WARNING = 'WARNING',
+  WARN = 'WARN',
   NOTICE = 'NOTICE',
   INFO = 'INFO',
   DEBUG = 'DEBUG',
